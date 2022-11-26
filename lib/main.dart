@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_online_shop/theme.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    const defaultTextStyle = TextStyle(
+        fontFamily: 'IranSans', color: LightThemeColors.primaryTextColor);
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -22,15 +25,26 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        textTheme: TextTheme(
+            bodyText2: defaultTextStyle,
+            caption: defaultTextStyle.apply(
+                color: LightThemeColors.secondaryTextColor),
+            headline6: defaultTextStyle.copyWith(fontWeight: FontWeight.bold)),
+        colorScheme: const ColorScheme.light(
+          primary: LightThemeColors.primaryColor,
+          secondary: LightThemeColors.secondaryColor,
+          onSecondary: Colors.white,
+        ),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const Directionality(
+          textDirection: TextDirection.rtl,
+          child: MyHomePage(title: 'فروشگاه نایک')),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -96,7 +110,11 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'You have pushed the button this many times:',
+              'دکمه ی پلاس را لمس نمایید',
+            ),
+            Text(
+              'دکمه ی پلاس را لمس نمایید',
+              style: Theme.of(context).textTheme.caption,
             ),
             Text(
               '$_counter',
