@@ -1,9 +1,6 @@
-import 'package:dio/dio.dart';
+import 'package:flutter_online_shop/common/http_client.dart';
 import 'package:flutter_online_shop/data/product.dart';
 import 'package:flutter_online_shop/data/source/product_data_source.dart';
-
-final httpClient =
-    Dio(BaseOptions(baseUrl: 'http://expertdevelopers.ir/api/v1/'));
     
 final productRepository =
     ProductRepository(ProductRemoteDataSource(httpClient));
