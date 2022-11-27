@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_online_shop/common/utils.dart';
 import 'package:flutter_online_shop/data/product.dart';
 import 'package:flutter_online_shop/theme.dart';
+import 'package:flutter_online_shop/ui/product/comment/comment_list.dart';
 import 'package:flutter_online_shop/widgets/image.dart';
 
 class ProductDetailScreen extends StatelessWidget {
@@ -21,7 +22,7 @@ class ProductDetailScreen extends StatelessWidget {
           width: MediaQuery.of(context).size.width - 48,
           child: FloatingActionButton.extended(
             onPressed: () {},
-            label: Text('افزودن به سبد خرید'),
+            label: const Text('افزودن به سبد خرید'),
           ),
         ),
         body: CustomScrollView(
@@ -45,9 +46,9 @@ class ProductDetailScreen extends StatelessWidget {
                       children: [
                         Expanded(
                             child: Text(
-                          product.title,
-                          style: Theme.of(context).textTheme.headline6,
-                        )),
+                              product.title,
+                              style: Theme.of(context).textTheme.headline6,
+                            )),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
@@ -61,12 +62,14 @@ class ProductDetailScreen extends StatelessWidget {
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 24,
                     ),
-                    Text(
-                        'این کتونی شدیدا برای دویدن و راه رفتن مناسب هست و تقریبا. هیچ فشار مخربی رو نمیذارد به پا و زانوان شما انتقال داده شود'),
-                    SizedBox(
+                    const Text(
+                      'این کتونی شدیدا برای دویدن و راه رفتن مناسب هست و تقریبا. هیچ فشار مخربی رو نمیذارد به پا و زانوان شما انتقال داده شود',
+                      style: TextStyle(height: 1.4),
+                    ),
+                    const SizedBox(
                       height: 24,
                     ),
                     Row(
@@ -76,18 +79,14 @@ class ProductDetailScreen extends StatelessWidget {
                           'نظرات کاربران',
                           style: Theme.of(context).textTheme.subtitle1,
                         ),
-                        TextButton(onPressed: () {}, child: Text('ثبت نظر'))
+                        TextButton(onPressed: () {}, child: const Text('ثبت نظر'))
                       ],
                     ),
-                    Container(
-                      color: Colors.blue,
-                      height: 1000,
-                      width: 300,
-                    )
                   ],
                 ),
               ),
-            )
+            ),
+            CommentList(productId: product.id),
           ],
         ),
       ),

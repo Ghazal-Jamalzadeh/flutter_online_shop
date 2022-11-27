@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
     });
 
     const defaultTextStyle = TextStyle(
-        fontFamily: 'IranYekan', color: LightThemeColors.primaryTextColor);
+        fontFamily: 'IranSans', color: LightThemeColors.primaryTextColor);
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -42,19 +42,22 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         textTheme: TextTheme(
+            subtitle1: defaultTextStyle.apply(
+                color: LightThemeColors.secondaryTextColor),
             bodyText2: defaultTextStyle,
+            button: defaultTextStyle,
             caption: defaultTextStyle.apply(
                 color: LightThemeColors.secondaryTextColor),
-            headline6: defaultTextStyle.copyWith(fontWeight: FontWeight.bold)),
+            headline6: defaultTextStyle.copyWith(
+                fontWeight: FontWeight.bold, fontSize: 18)),
         colorScheme: const ColorScheme.light(
           primary: LightThemeColors.primaryColor,
           secondary: LightThemeColors.secondaryColor,
           onSecondary: Colors.white,
         ),
       ),
-      home:  Directionality(
-          textDirection: TextDirection.rtl,
-          child: HomeScreen()),
+      home: const Directionality(
+          textDirection: TextDirection.rtl, child: HomeScreen()),
     );
   }
 }
