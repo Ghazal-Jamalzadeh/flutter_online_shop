@@ -7,6 +7,7 @@ import 'package:flutter_online_shop/data/product.dart';
 import 'package:flutter_online_shop/data/repo/banner_repository.dart';
 import 'package:flutter_online_shop/data/repo/product_repository.dart';
 import 'package:flutter_online_shop/ui/home/bloc/home_bloc.dart';
+import 'package:flutter_online_shop/ui/product/product.dart';
 import 'package:flutter_online_shop/widgets/image.dart';
 import 'package:flutter_online_shop/widgets/slider.dart';
 
@@ -28,6 +29,7 @@ class HomeScreen extends StatelessWidget {
           child: BlocBuilder<HomeBloc, HomeState>(builder: ((context, state) {
             if (state is HomeSuccess) {
               return ListView.builder(
+                physics: defaultScrollPhysics,
                   itemCount: 5,
                   itemBuilder: (context, index) {
                     switch (index) {
@@ -122,67 +124,7 @@ class _HorizontalProductList extends StatelessWidget {
               padding: const EdgeInsets.only(left: 8, right: 8),
               itemBuilder: ((context, index) {
                 final product = products[index];
-                return Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: SizedBox(
-                      width: 176,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Stack(
-                            children: [
-                              SizedBox(
-                                width: 176,
-                                height: 189,
-                                child: ImageLoadingService(
-                                  imageUrl: product.imageUrl,
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                              ),
-                              Positioned(
-                                right: 8,
-                                top: 8,
-                                child: Container(
-                                  width: 32,
-                                  height: 32,
-                                  alignment: Alignment.center,
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.white,
-                                  ),
-                                  child: const Icon(CupertinoIcons.heart,
-                                      size: 20),
-                                ),
-                              )
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              product.title,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 8, left: 8),
-                            child: Text(
-                              product.previousPrice.withPriceLabel,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .caption!
-                                  .copyWith(
-                                  decoration: TextDecoration.lineThrough),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                left: 8, right: 8, top: 4),
-                            child: Text(product.price.withPriceLabel),
-                          ),
-                        ],
-                      ),
-                    ));
+                return ProductItem(product: product, borderRadius: BorderRadius.circular(12));
               })),
         )
       ],
