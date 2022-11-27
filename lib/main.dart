@@ -4,6 +4,7 @@ import 'package:flutter_online_shop/data/repo/banner_repository.dart';
 import 'package:flutter_online_shop/data/repo/product_repository.dart';
 import 'package:flutter_online_shop/theme.dart';
 import 'package:flutter_online_shop/ui/home/home.dart';
+import 'package:flutter_online_shop/ui/root.dart';
 
 void main() {
   runApp(const MyApp());
@@ -57,7 +58,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: const Directionality(
-          textDirection: TextDirection.rtl, child: HomeScreen()),
+          textDirection: TextDirection.rtl, child: RootScreen()),
     );
   }
 }
