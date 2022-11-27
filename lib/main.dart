@@ -3,6 +3,7 @@ import 'package:flutter_online_shop/data/product.dart';
 import 'package:flutter_online_shop/data/repo/banner_repository.dart';
 import 'package:flutter_online_shop/data/repo/product_repository.dart';
 import 'package:flutter_online_shop/theme.dart';
+import 'package:flutter_online_shop/ui/auth/auth.dart';
 import 'package:flutter_online_shop/ui/home/home.dart';
 import 'package:flutter_online_shop/ui/root.dart';
 
@@ -58,7 +59,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: const Directionality(
-          textDirection: TextDirection.rtl, child: RootScreen()),
+          textDirection: TextDirection.rtl, child: AuthScreen()),
     );
   }
 }
