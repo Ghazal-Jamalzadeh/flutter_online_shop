@@ -32,3 +32,85 @@ SignUp--------------------------------------------------------------------------
 
 2- repository
 اینجا هم void برمیگرده اب همون استدلال قبلی
+
+Refresh Token----------------------------------------------------------------------------------------
+نکته خاصی نداره مثل قبلیاس
+
+Shared Pref in flutter------------------------------------------------------------------------------
+https://pub.dev/packages/shared_preferences/install
+
+1- repository
+توی ریپازیتوری یک متد مینویسیم برای ذخیره سازی توکن ها
+_persistAuthTokens
+
+بعد توی ریپازیتوری login & signup v هر جا توکن جدید میگیریم این فانکشن را صدا میزنیم
+
+فانکشن قبلی پرایویت بود چون فقط توی همین ریپازیتوری استفاده میکردیم
+یک فانکشن دیگه داریم برای چک کردن لاگین کاربر یعنی خواندن اطلاعات از shared pref
+این یکی باید پابلیک باشه چون جاهای مختلفی قراره ازش استفاده کنیم loadAuthInfo
+
+داخل ریپازیتوری یک instance میسازیم از ValueNotifier
+چون معمولا توی اپلیکیشن ها اینجوریه که وقتی عمل لاگین را انجام میدین میخواین همه کسایی که نیاز دارن رفرش شن و ریبیلد شن
+پس به یک ValueNotifier نیاز دارید که هنگتم تغییر کردن اطلاعات این رو به همه گزارش بده
+استاتیکش هم میکنیم که نیاز به ساخت آبجکت برای دسترسی بهش نباشه
+در کل شبیه لایو دیتاست
+
+چوم اگر کاربر لاگین نکرده باشه مقدار null میشه پس  باید nullable تعریفش کنیم و مقدار پیش فرض null رو هم بهش میدیم
+
+داخل تابع loadAuthInfo میایم این ValueNotifier را در صورت پر بودن setValue میکنیم
+
+2- main
+ما اطلاعات را داریم از یک فایلی میخونیم و ذخیره میکنیم دیگه.
+این فایل shared Pref است.
+در نتیجه زمانی که اپ داره استارت میشه و فانکشن main صدا زده میشه
+اینجا باید اطلاعات را از فایل بخونیم و بریزیم توی رم
+پس فانکشن loadAuthInfo را اینجا صدا میزنیم
+
+ولی برای استفاده از sharedPref یک اروری میگیریم که binary messenger هنوز initilaized نشده
+پس خط کد زیر را اضافه میکنیم
+  WidgetsFlutterBinding.ensureInitialized();
+
+3- bloc
+
+4- AuthScreen
+همه چیز را داخل ویجت blocProvider میذاریم
+که بلاکمون تامین شه و از اینجا به بعد بتونیم با اکستنشن فانکشن روی کانتکس بهش دسترسی پیدا کنیم
+
+بعد هم ویجت BlocBuilder برای کار با state ها
+
+ولی نکته ای که داره اینه که مثلا وقتی state success داریم قرار نیست این صفحه ریبیلد شه
+برای این کار bloc Builder یک فیلدی داره به اسم buildWhen
+ورودیش یک فانکشن هست که دو تا پارامتر داره
+این دو تا پارامتر این هستن که state قبلیت چی بوده و state فعلیت چیه
+میخوایم با استفاده از این buildWhen بگیم فقط زمانی builder ما ریبیلد شه که
+استیت فعلی برابر با لودینگ باشه یا initial یا error
+این شرط را return میکنیم
+
+کار دیگه ای میکنیم اضافه کردن این خط کد هست
+بهش میگیم هر ایونتی که برات اتفاق افتاد و هر state ی که برات اومد
+این فانکشن صدا زده میشه
+برای نشون دادن اسنک بار و اینتن زدن
+وقتایی که میخوایم به شکل ایونت نگاه کنیم به state ها به درد میخوره
+     bloc.stream.forEach((state) {
+                if (state is AuthSuccess) {
+                  Navigator.of(context).pop();
+                } else if (state is AuthError) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(state.exception.message)));
+                }
+              });
+
+5- cart
+چون میخوایم به اون value Notifier که توی sharedPref تعریف کردیم گوش کنیم
+ValueListenableBuilder به عنوان روت از یک ویجتی استفاده میکنیم به اسم
+
+ body: ValueListenableBuilder<AuthInfo?>(
+   valueListenable: AuthRepository.authChangeNotifier,
+   builder: (context, authState, child) {
+
+ نکته آموزشی :
+ وقتی rootNavigator را برابر با true قرار میدیم این صفحه روی همه چیز از جمله bottom nav قرار میگیره
+   Navigator.of(context, rootNavigator: true).push(
+                               MaterialPageRoute(
+                                   builder: (context) => const AuthScreen()));
+                         },

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_online_shop/ui/cart/cart.dart';
 import 'package:flutter_online_shop/ui/home/home.dart';
 
 const int homeIndex = 0;
@@ -29,7 +30,7 @@ class _RootScreenState extends State<RootScreen> {
 
   Future<bool> _onWillPop() async {
     final NavigatorState currentSelectedTabNavigatorState =
-        map[selectedScreenIndex]!.currentState!;
+    map[selectedScreenIndex]!.currentState!;
     if (currentSelectedTabNavigatorState.canPop()) {
       currentSelectedTabNavigatorState.pop();
       return false;
@@ -52,12 +53,7 @@ class _RootScreenState extends State<RootScreen> {
             index: selectedScreenIndex,
             children: [
               _navigator(_homeKey, homeIndex, const HomeScreen()),
-              _navigator(
-                  _cartKey,
-                  cartIndex,
-                  const Center(
-                    child: Text('Cart'),
-                  )),
+              _navigator(_cartKey, cartIndex, const CartScreen()),
               _navigator(
                   _profileKey,
                   profileIndex,
@@ -92,9 +88,9 @@ class _RootScreenState extends State<RootScreen> {
     return key.currentState == null && selectedScreenIndex != index
         ? Container()
         : Navigator(
-            key: key,
-            onGenerateRoute: (settings) => MaterialPageRoute(
-                builder: (context) => Offstage(
-                    offstage: selectedScreenIndex != index, child: child)));
+        key: key,
+        onGenerateRoute: (settings) => MaterialPageRoute(
+            builder: (context) => Offstage(
+                offstage: selectedScreenIndex != index, child: child)));
   }
 }
